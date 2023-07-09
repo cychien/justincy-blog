@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply box-border;
+  }
+
+  * {
+    @apply m-0;
+  }
+
+  html,
+  body {
+    @apply font-body h-full;
+    /* enable it when using variable font: @apply font-body */
+  }
+
+  body {
+    @apply leading-normal antialiased min-h-full transition-colors text-gray-900 bg-white;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    @apply block max-w-full;
+  }
+
+  /* Remove built-in form typography styles */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  /* Avoid text overflows */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  .root {
+    @apply isolate;
+  }
+}
+
+@layer utilities {
+  .border-pretty {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .shadow-pretty {
+    @apply bg-clip-padding;
+    box-shadow: 0px 1px 0px -1px rgba(0, 0, 0, 0.05), 0px 1px 1px -1px rgba(0, 0, 0, 0.05), 0px 1px 2px -1px rgba(0, 0, 0, 0.05), 0px 2px 4px -2px rgba(0, 0, 0, 0.05), 0px 3px 6px -3px rgba(0, 0, 0, 0.05);
+  }
+}
