@@ -1,5 +1,5 @@
-import type { V2_MetaFunction } from "@remix-run/cloudflare";
-import { useLocation } from "@remix-run/react";
+import { json, type V2_MetaFunction } from "@remix-run/cloudflare";
+import { useLoaderData, useLocation } from "@remix-run/react";
 
 import avatarSrc from "~/assets/avatar.jpeg";
 import {
@@ -18,6 +18,15 @@ import {
   TabsList,
   TabsTrigger,
 } from "~/components/site/Tabs";
+import { getArticleURL } from "~/helpers/article";
+import * as articleA from "~/routes/articles.jobart.mdx";
+
+function articleFromModule(mod: any) {
+  return {
+    slug: mod.filename.replace(/\.mdx?$/, ""),
+    ...mod.attributes.meta,
+  };
+}
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -26,8 +35,17 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
+export async function loader() {
+  // Return metadata about each of the posts for display on the index page.
+  // Referencing the posts here instead of in the Index component down below
+  // lets us avoid bundling the actual posts themselves in the bundle for the
+  // index page.
+  return json([articleFromModule(articleA)]);
+}
+
 export default function Index() {
   const { pathname, search } = useLocation();
+  const articles = useLoaderData<typeof loader>();
 
   return (
     <main className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[288px_1fr] lg:gap-16 xl:grid-cols-[288px_1fr] xl:gap-28">
@@ -78,7 +96,7 @@ export default function Index() {
               >
                 <Github className="h-[17px] w-[17px] flex-shrink-0 text-gray-500 group-hover:text-gray-900" />
                 <span className="font-latin text-sm font-medium text-gray-700 group-hover:text-gray-900 group-hover:underline">
-                  <ShiftBy y={-1}>@cychien</ShiftBy>
+                  <ShiftBy y={1}>https://github.com/cychien</ShiftBy>
                 </span>
               </a>
             </div>
@@ -115,7 +133,7 @@ export default function Index() {
       </div>
       <div className="divide-y-2 divide-gray-100">
         <section className="pb-12">
-          <h1 className="text-2xl font-medium tracking-widest">文章</h1>
+          <h1 className="text-2xl font-semibold tracking-widest">文章</h1>
           <p className="mt-4 leading-7 text-gray-500">
             主要分享與使用者體驗有關的內容，偶爾會記錄生活雜想。HTDT
             是一個有趣的文章分類，全名是 How to do
@@ -136,27 +154,17 @@ export default function Index() {
             </TabsList>
             <TabsContent value="all">
               <div className="space-y-12">
-                <HomeArticle
-                  title="Webfont 效能優化"
-                  excerpt="文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，從根本出發提出網頁文字的最佳實踐"
-                  publishedAt="2022/6/20"
-                  tags="前端開發"
-                  cover=""
-                />
-                <HomeArticle
-                  title="Webfont 效能優化"
-                  excerpt="文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，從根本出發提出網頁文字的最佳實踐"
-                  publishedAt="2022/6/20"
-                  tags="前端開發"
-                  cover=""
-                />
-                <HomeArticle
-                  title="Webfont 效能優化"
-                  excerpt="文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，從根本出發提出網頁文字的最佳實踐"
-                  publishedAt="2022/6/20"
-                  tags="前端開發"
-                  cover=""
-                />
+                {articles.map((article) => (
+                  <HomeArticle
+                    key={article.slug}
+                    title={article[0].title}
+                    excerpt={article[1].description}
+                    publishedAt="2022/6/20"
+                    tags="前端開發"
+                    cover=""
+                    url={getArticleURL(article.slug)}
+                  />
+                ))}
               </div>
             </TabsContent>
             <TabsContent value="design"></TabsContent>
