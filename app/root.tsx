@@ -42,11 +42,11 @@ export default function App() {
         <div className="absolute right-0 top-0 -z-10">
           <img src={bgSrc} alt="" />
         </div>
-        <div className="mx-auto max-w-[1228px] px-4 sm:px-8">
-          <Header />
-          <Outlet />
-        </div>
-        <div className="mt-12 lg:mt-24">
+        <div>
+          <div className="mx-auto mb-12 px-4 sm:px-8 lg:mb-24 xl:w-[1228px]">
+            <Header />
+            <Outlet />
+          </div>
           <Footer />
         </div>
         <ScrollRestoration />

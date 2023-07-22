@@ -10,7 +10,6 @@ import {
   Twitter,
 } from "~/components/icons";
 import { Button } from "~/components/site/Button";
-import { HomeArticle } from "~/components/site/HomeArticle";
 import { ShiftBy } from "~/components/site/ShiftBy";
 import {
   Tabs,
@@ -18,15 +17,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "~/components/site/Tabs";
-import { getArticleURL } from "~/helpers/article";
-import * as articleA from "~/routes/articles.jobart.mdx";
-
-function articleFromModule(mod: any) {
-  return {
-    slug: mod.filename.replace(/\.mdx?$/, ""),
-    ...mod.attributes.meta,
-  };
-}
+import type { Article } from "~/helpers/article";
+import {
+  getArticlesForEveryTags,
+  getArticleURLFromSlug,
+} from "~/helpers/article";
+import { HomeArticle } from "~/routes/_index/HomeArticle";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -40,12 +36,12 @@ export async function loader() {
   // Referencing the posts here instead of in the Index component down below
   // lets us avoid bundling the actual posts themselves in the bundle for the
   // index page.
-  return json([articleFromModule(articleA)]);
+  return json({ articles: getArticlesForEveryTags() });
 }
 
 export default function Index() {
   const { pathname, search } = useLocation();
-  const articles = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>();
 
   return (
     <main className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[288px_1fr] lg:gap-16 xl:grid-cols-[288px_1fr] xl:gap-28">
@@ -148,29 +144,25 @@ export default function Index() {
             <TabsList>
               <TabsTrigger value="all">所有文章</TabsTrigger>
               <TabsTrigger value="design">設計</TabsTrigger>
-              <TabsTrigger value="frontend-development">前端開發</TabsTrigger>
+              <TabsTrigger value="fend">前端開發</TabsTrigger>
               <TabsTrigger value="htdt">HTDT</TabsTrigger>
               <TabsTrigger value="life">生活</TabsTrigger>
             </TabsList>
             <TabsContent value="all">
-              <div className="space-y-12">
-                {articles.map((article) => (
-                  <HomeArticle
-                    key={article.slug}
-                    title={article[0].title}
-                    excerpt={article[1].description}
-                    publishedAt="2022/6/20"
-                    tags="前端開發"
-                    cover=""
-                    url={getArticleURL(article.slug)}
-                  />
-                ))}
-              </div>
+              <ArticlesTabsContent articles={loaderData.articles["all"]} />
             </TabsContent>
-            <TabsContent value="design"></TabsContent>
-            <TabsContent value="frontend-development"></TabsContent>
-            <TabsContent value="htdt"></TabsContent>
-            <TabsContent value="life"></TabsContent>
+            <TabsContent value="design">
+              <ArticlesTabsContent articles={loaderData.articles["design"]} />
+            </TabsContent>
+            <TabsContent value="fend">
+              <ArticlesTabsContent articles={loaderData.articles["fend"]} />
+            </TabsContent>
+            <TabsContent value="htdt">
+              <ArticlesTabsContent articles={loaderData.articles["htdt"]} />
+            </TabsContent>
+            <TabsContent value="life">
+              <ArticlesTabsContent articles={loaderData.articles["life"]} />
+            </TabsContent>
           </Tabs>
           <div className="mt-12">
             <Button
@@ -186,5 +178,31 @@ export default function Index() {
         </section>
       </div>
     </main>
+  );
+}
+
+function ArticlesTabsContent({
+  articles,
+}: {
+  articles: undefined | Article[];
+}) {
+  if (!articles || articles.length === 0) {
+    return <p className="text-sm text-gray-500">尚無內容</p>;
+  }
+
+  return (
+    <div className="space-y-12">
+      {articles.map((article) => (
+        <HomeArticle
+          key={article.filename}
+          title={article.attributes.title}
+          excerpt={article.attributes.description}
+          publishedAt={article.attributes.published_at}
+          tag={article.attributes.tag}
+          cover=""
+          url={getArticleURLFromSlug(article.filename.replace(/\.mdx?$/, ""))}
+        />
+      ))}
+    </div>
   );
 }

@@ -50,6 +50,11 @@
     overflow-wrap: break-word;
   }
 
+  pre {
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
   .root {
     @apply isolate;
   }
@@ -64,4 +69,36 @@
     @apply bg-clip-padding;
     box-shadow: 0px 1px 0px -1px rgba(0, 0, 0, 0.05), 0px 1px 1px -1px rgba(0, 0, 0, 0.05), 0px 1px 2px -1px rgba(0, 0, 0, 0.05), 0px 2px 4px -2px rgba(0, 0, 0, 0.05), 0px 3px 6px -3px rgba(0, 0, 0, 0.05);
   }
+}
+
+/* article main content */
+.main-content {
+  @apply max-w-full;  
+}
+@media (min-width: 830px) {
+  .main-content {
+    max-width: 789px;
+  }
+}
+
+/* article toc */
+.toc {
+  @apply sticky top-12 pt-9 pb-8 pr-6 bg-gray-50 rounded-lg hidden xl:block;
+  width: 272px;
+  max-width: 272px;
+}
+.toc-item-h2 {
+  @apply py-1 pl-6 text-gray-700 text-sm font-medium;
+}
+.toc-item-h2:not(:first-child) {
+  @apply mt-2;
+}
+.toc-level-2 {
+  @apply mt-2 py-2 border-l-[2px] border-gray-100;
+}
+.toc-item-h3 {
+  @apply py-1 pl-4 pr-2 text-gray-500 text-sm font-medium;
+}
+.toc-item-h3:not(:first-child) {
+  @apply mt-1;
 }

@@ -22,4 +22,53 @@ export default {
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
   },
+  mdx: async () => {
+    const [rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeWrap] =
+      await Promise.all([
+        import("rehype-slug").then((mod) => mod.default),
+        import("rehype-autolink-headings").then((mod) => mod.default),
+        import("@jsdevtools/rehype-toc").then((mod) => mod.default),
+        import("rehype-wrap").then((mod) => mod.default),
+      ]);
+
+    const rehypeMdxCodeMeta = async () => {
+      const { visit } = await import("unist-util-visit");
+
+      return () => {
+        return (tree) => {
+          visit(tree, "element", visitor);
+        };
+
+        function visitor(node) {
+          if (node.tagName === "code" && node.data && node.data.meta) {
+            const blocks = node.data.meta.split(" ");
+
+            node.properties = blocks.reduce((props, block) => {
+              const [prop, value] = block.split("=");
+
+              if (typeof value === "undefined") {
+                props.line = prop;
+
+                return props;
+              }
+
+              props[prop] = value;
+
+              return props;
+            }, node.properties);
+          }
+        }
+      };
+    };
+
+    return {
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeAutolinkHeadings,
+        await rehypeMdxCodeMeta(),
+        [rehypeWrap, { wrapper: "div.main-content" }],
+        [rehypeToc, { cssClasses: { toc: "toc not-prose" } }],
+      ],
+    };
+  },
 };

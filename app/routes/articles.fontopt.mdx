@@ -1,0 +1,282 @@
+---
+tag: fend
+title: Web Fonts 效能優化
+description: 文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，並從根本出發提出網頁文字的最佳實踐。
+published_at: 2022-04-04
+meta:
+  - { title: Web Fonts 效能優化 }
+  - { description: 文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，並從根本出發提出網頁文字的最佳實踐。}
+---
+
+import CodeBlock from "~/components/site/mdx/CodeBlock"
+
+## WebFont 效能影響使用者體驗
+
+許多網站有使用到特殊字體，如 Lato, Inter, 思源黑體等，特殊字體比起內建字體給予我們更多彈性，不只使文字變得更易讀、也讓網站整體傳達出的視覺更一致。
+
+但使用特殊字體的代價可不小，瀏覽你網頁的人必須額外下載這些字體，這些字體動輒就是幾百 KB，隨意引入的話，更可能高達幾 MB。
+
+在字體檔還沒被下載下來前，瀏覽器是沒有該字體能引用的，因此只能呈現內建字體，等到字體檔完全 ready 好後，瀏覽器才會做一次更新，將文字用新字體呈現。
+
+因此若字體檔下載速度過慢，瀏覽者將發現他的畫面在幾秒後會閃一下，然後所有字體都瞬間改變了。我們稱這樣的現象為 FOUT (Flash Of Unstyled Text)，FOUT 是一個常見的 UX 問題，FOUT 會讓瀏覽者困惑、迷失。
+
+FOUT 基本上無法完全解決，但你可以**降低字體載入時間**，讓 FOUT 更快的發生。這樣一來，瀏覽者受 FOUT 的影響會更小，甚至可能完全察覺不到 FOUT。
+
+## Google Fonts 提供的引入方式夠好嗎
+
+談到字體，相信很多人用的是 Google Fonts，Google Fonts 本身提供我們一套字體載入方式：
+
+<CodeBlock>
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+  rel="stylesheet"
+/>
+```
+</CodeBlock>
+
+但這套方式其實不是最有效率的方式。
+
+我們將深入了解 Google Fonts 的字體引入原理，並從中找出問題。
+
+### Google Fonts 字體引入原理
+
+從 Parse HTML 到成功下載字體檔至瀏覽器，整個過程可分為 3 步驟：
+
+**步驟一：Parse HTML**
+
+當某人進入你的網站，瀏覽器會做的第一件事是請求訪問網址的 HTML 檔。一拿到 HTML 檔，瀏覽器會開始 parse 其中的內容，遇到需要請求的資源，再分別發出請求。
+
+**步驟二：請求字體檔的 CSS**
+
+當瀏覽器 parse 到 Google Fonts 的 `<link>` 敘述時，瀏覽器便會去請求 `href` 上所指定的資源。
+
+這個資源還不是字體檔，而是一份充滿 `@font-face` 的 CSS 檔。
+
+內容長得像這樣：
+
+<CodeBlock>
+```css
+/* devanagari */
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v15/YA9Qr0Wd4kDdMtDqHTLNkiQqtbGstvY.woff2)
+    format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8,
+    U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v15/YA9Qr0Wd4kDdMtDqHTLCkiQqtbGstvY.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v15/YA9Qr0Wd4kDdMtDqHTLMkiQqtbGs.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+```
+</CodeBlock>
+
+**步驟三：等 render tree 建構完畢後，開始請求字體檔**
+
+render tree 由 DOM 與 CSSOM 組成，也就是當生成完 DOM，且 CSS resource 也全被拿回、生成完 CSSOM 時，render tree 才會開始建構。
+
+當 render tree 建構完畢後，瀏覽器就會**立即**呈現畫面給瀏覽者。
+
+不過要注意的是，**此時還沒有字體檔**，此時瀏覽器才正要開始請求字體檔，等取得字體檔時可能已經是幾秒之後了，而這就是為什麼會出現 FOUT 的原因。
+
+那為什麼瀏覽器要等 render tree 建構完，才開始請求呢？
+
+那是因為**瀏覽器在幫你做字體檔下載的優化**。
+
+`@font-face` 有一個特別的屬性 `unicode-range`，若你的頁面中有文字落在這個 unicode range 內，瀏覽器就會去請求這個 `@font-face` src 所指定的字體檔。
+
+<CodeBlock>
+```css {8,9}
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v15/YA9Qr0Wd4kDdMtDqHTLNkiQqtbGstvY.woff2)
+    format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8,
+    U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+```
+</CodeBlock>
+
+因此瀏覽器必須等 render tree 建構完後才能知道這頁用到哪些文字，才能發出最有效率的請求。
+
+想想若你的網站只用到 Inter 的拉丁字體 (英文)，但瀏覽器卻二話不說將全部字體都下載下來 (Vitnamese, ....)，這麽做將不只浪費瀏覽者的頻寬，還會讓字體檔變大好幾倍，嚴重拉長下載時間。
+
+這個有趣的技術稱為 **Subsetting**，它讓我們以最有效率的方式載入文字，但凡事都有取捨，延後請求文字檔就是它帶來的犧牲。
+
+### @import 版的字體引入方式
+
+Google Fonts 提供另一種以 `@import` 載入字體的方式，`@import` 是一個請求資源的語法，不過 `@import` 只能放在 stylesheet 裡，像是 CSS 檔或是 `<style>` tag。
+
+<CodeBlock>
+```html
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+</style>
+```
+</CodeBlock>
+
+必須注意的是，使用 `@import` 方式引入字體可能會比使用 `<link>` 的方式更慢。
+
+為什麼呢？
+
+瀏覽器在讀到特定敘述時才會去請求含有 `@font-face` 的 CSS 檔，像是 `<link>` 方式中的 `<link .../>` 以及 @import 方式中的 `@import`。
+
+`<link>` 敘述永遠會被放在 `<head>` 裡，在整個 html 檔裡十分靠前，因此能較快地被請求，但 `@import` 敘述除了可以放在 `<head>` 裡 (style tag)，也能放在 external CSS 檔裡，若將 `@import` inline 放在 `<head>` 裡，被 parse 到的時機點將和 `<link>` 方式差不多，但若放在 external CSS 檔裡，`@import` 被 parse 到的時機點將會大幅後延，因為這次瀏覽器必須先拿回 external CSS 檔，才能看到 `@import` 敘述，中間多了一個請求來回時間。
+
+因此，若要有更佳的 WebFont 效能，最好使用 `<link>` 方式引入字體；若必須使用 `@import` 方式，也建議放在 `<head>` 的 `<style>` tag 裡。
+
+### Google Fonts 之上還能再優化
+
+總結來看，無論你使用的是 `<link>` 方式或是 `@import` 方式，你都必需至少發出兩次請求，分別是
+
+**Request 1: 請求 CSS 檔**
+
+拿回帶有 subsetting `@font-face` 敘述的 CSS 檔。
+
+**Request 2: 請求文字檔**
+
+在 render tree 建構完畢後才會發出，只請求這個頁面有用到的文字字體。
+
+從這些觀念出發，我們來想想如何做得更好。
+
+## 優化 Google Fonts
+
+我們有 3 項優化可以做，分別是：
+
+1. 減少 Round Trip 次數
+2. Self host font
+3. Preload font
+
+### 減少 Round Trip 次數
+
+在原始的 Google Fonts 引入方式裡，瀏覽器至少需要發出兩次請求，一次請求 CSS 檔，一次請求文字檔。
+
+但，有沒有可能跳過第一次的請求呢？
+
+可以的，方法是直接將 `@font-face` 敘述放在 stylesheet 裡。若我們不知道 font-face 檔該長怎樣，我們可以先請求一次 Google Fonts 的 CSS 檔，然後將結果 hardcode 在你的 stylesheet 裡。
+
+這個優化，可以減少一次 Round Trip Time，使得 CSSOM 及 render tree 更快的被建構出來，進而提早請求文字檔、提早出現 FOUT，降低 FOUT 產生的影響。
+
+Next.js 與 Gatsby.js 都[內建有這個優化](https://nextjs.org/docs/basic-features/font-optimization))，在 build time 時，這些工具會自動將你的 Google Fonts `<link>` 敘述轉為 `@font-face` 敘述，省下你去試打、hardcode `@font-face` 回你專案的時間。
+
+### Self host font
+
+在過去，許多人會建議你用 Google Fonts 上 host 的 font，而不要自己 host，原因是 HTTP/2 未普及且 chrome 有 global cache 機制。
+
+HTTP/2 是新一代的網路協議，相較於 HTTP/1 擁有更佳的效能，整體資源請求時間更短。在 HTTP/2 的架構下，少 connection 比起多 connection 的效率更好，因此若能自己 host font，就能少一條連到 google server 的連線 (fonts.gstatic.com)，效率也就能提升。
+
+但在 HTTP/1 下其實少 connection 帶來的幫助並不大，因此在過去大多不需要 self host font。
+
+global cache 是 chrome 早期的 cache 機制，不同網站間能共用 cache，舉例來說：某位瀏覽者在 A 網站曾下載過 Google host 的 Inter 字體，若他再到 B 網站，而 B 網站也剛好使用了 Google host 的 Inter 字體，那麼這位瀏覽者並不需要重新下載一次，而是會直接擊中 cache，立即載入該字體檔。
+
+若有 global cache 機制，那麼使用 Google host 的 font 是一個比較好的選擇，因為瀏覽者如果曾下載過你用的字體，你的網站便可以從 cache 直接取得字體，而不用建連線、發請求。
+
+Chrome 在 86 版因為安全考量，取消了 global cache 機制，轉而使用 double keyed cache 機制。在 double keyed cache 機制下，一個 cache 的 key 包括 request 方與 resource 方，假設瀏覽者在 A 網站下載 Inter 字體，那麼該字體檔的 cache key 就會是 A 與 Inter.woff2，只要 cache key 有任何不同，就無法擊中 cache 。也就是說，若你的網站 B 同樣使用到 Inter 字體，但因為你的請求是 B 與 Inter.woff2，所以並無法擊中 cache。
+
+因此，在現在的環境下，如果你的 server 有 HTTP/2 的功能，那麼 self host font 就會是效能更好的選擇。
+
+### Preload font
+
+在「Google Fonts 字體引入原理」一段中我們知道，瀏覽器會等到 render tree 建構完成後才去請求字體檔，這麼做的目的是為了做 subsetting 優化。但如果我們已經知道這個頁面有用到哪些 subset，我們能不能要求瀏覽器提早請求字體檔呢？
+
+可以的，我們可以利用 preload 語法。
+
+preload 是一個宣告式指令：
+
+<CodeBlock>
+```html
+<link
+  rel="preload"
+  as="font"
+  type="font/woff2"
+  href="/latin-regular.woff2"
+  crossorigin="anonymous"
+/>
+```
+</CodeBlock>
+
+指示瀏覽器必須盡快下載這項資源，下載下來的資源會儲存進 memory cache 或 http cache 中。這樣一來，`@font-face` 發出的請求就會直接擊中 cache，而不用等一個 round trip time。
+
+簡單來說，我們將原本 coupled 的資源請求拆解開來，從 waterfall requests 變為平行請求的 requests。
+
+使用 preload 載入 font 時必須注意 2 個細節，防止 preload 失去效用：
+
+**1. 加上 `crossorigin` 屬性，且值為 `annoymous`**
+
+根據 [Font fetching requirements](https://drafts.csswg.org/css-fonts/#font-fetching-requirements) ，字體檔必須以 anonymous-mode CORS 的方式來請求，否則瀏覽器會忽略拿回的結果。anonymous-mode 表示不與 server 交換 user credential，CORS 則是向瀏覽器及 server 表明這是一個跨域 (cross origin) 的請求。
+
+**2. 加上 `as` 屬性，且值為 `font`**
+
+as 的預設值是 `XHR`，若不加 `as` 屬性，`@font-face` 會因為找不到類別相符的資源而再請求一次。
+
+Preload Font 能大幅提升 WebFont 效能，但必須謹慎使用。
+
+## 其他優化技巧
+
+### 正確的撰寫 @font-face
+
+一個好的 @font-face 寫法如下：
+
+<CodeBlock>
+```css
+@font-face {
+  font-family: Inter;
+  src: local("Inter"), url("/fonts/Inter.woff2") format("woff2"), url("/fonts/Inter.woff")
+      format("woff");
+}
+```
+</CodeBlock>
+
+`src` 的順序非常重要，最好能先寫 `local()` 敘述，讓瀏覽器檢查看看有沒有 local 的 font 能直接使用，若能，瀏覽器就可以跳過下載步驟。
+
+另外，為不同格式的字體加上 `format` 關鍵字。woff2 雖是體積最小的字體檔，但並不是所有瀏覽器版本都支援，若有提供 `format`，瀏覽器就能根據自身版本，找到相容的字體檔格式做下載，而不用浪費時間下載自己不能用的字體檔。
+
+### 使用 Variable Fonts
+
+一般的 web fonts 每個不同形態都要下載一份字體檔，如果你想用這些 weight: 400, 500, 700 和這些 style: regular, italic，那麼就必須下載 6 (3 \* 2) 份字體檔。
+
+但如果你用 [variable fonts](https://web.dev/variable-fonts/) 的話，下載一份稍微大一點的字體檔即可。
+
+variable fonts 是一種特殊字體檔，本身有多種數值可以調整，且調整範圍是連續性的。舉 font weight 為例，對於一般的 font，只能使用你有引入的數值，像是 400, 500, 700…，但 variable fonts 不一樣，一旦你有引入 variable fonts，你可以使用的數值是從 100 - 1000 的 (範圍可能不同，但會是連續性的)，這就造成無論你使用多少 variants，你都只需要引入一個字體檔就好，大大節省了傳輸大小及時間。
+
+variable fonts 在[現代瀏覽器都支援](https://caniuse.com/variable-fonts) (不包括 IE)。
+
+### 中文字體較難優化
+
+中文字不同於拉丁字母，數量非常多，導致必須得做 subsetting，而且幾乎不可能自己做，這樣一來，上述提到的 preload 方法就會變得不可行，效能優化效果會很有限。
+
+遇到這種情況，你可以用 [fontmin](https://github.com/ecomfe/fontmin) 在 build time 時 extract 出這個 project 有用到的所有文字，並動態生成出一份專屬的文字檔；再不然就是不要引入中文字體，採用瀏覽器的預設字體。
+
+## 總結
+
+在本篇文章裡，我們總結了幾個提升 web fonts 效能的方法，讓網站在視覺上更穩定。
+
+這幾個方法都不難，都是一件小事，但如果你順手做了，你的網站就能得到顯著的使用者體驗提升。
