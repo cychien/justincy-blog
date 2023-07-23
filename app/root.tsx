@@ -39,15 +39,22 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="absolute right-0 top-0 -z-10">
-          <img src={bgSrc} alt="" />
-        </div>
-        <div>
-          <div className="mx-auto mb-12 px-4 sm:px-8 lg:mb-24 xl:w-[1228px]">
+        <div
+          className="absolute left-0 top-0 -z-10 h-full max-h-full w-full overflow-hidden bg-no-repeat"
+          style={{
+            backgroundImage: `url(${bgSrc})`,
+            backgroundPosition: "center top",
+            backgroundSize: "2500px 873px",
+          }}
+        />
+        <div className="flex h-full flex-col">
+          <div className="mx-auto mb-12 w-full px-4 sm:px-8 lg:mb-24 xl:w-[1228px]">
             <Header />
             <Outlet />
           </div>
-          <Footer />
+          <div className="mt-auto">
+            <Footer />
+          </div>
         </div>
         <ScrollRestoration />
         <Scripts />

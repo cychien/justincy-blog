@@ -31,7 +31,10 @@ const TabsList = React.forwardRef<TabsListRef, TabsListProps>(
     return (
       <TabsListPrimitive
         ref={ref}
-        className={cn("inline-flex items-center space-x-2", className)}
+        className={cn(
+          "relative flex items-center space-x-2 after:absolute after:bottom-0 after:left-0 after:block after:h-[3px] after:w-full after:bg-gray-100 after:content-['']",
+          className
+        )}
         {...props}
       />
     );
@@ -50,7 +53,7 @@ const TabsTrigger = React.forwardRef<TabsTriggerRef, TabsTriggerProps>(
       <TabsTriggerPrimitive
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded px-3 py-2 text-sm font-medium text-gray-500 transition-all hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-gray-100 data-[state=active]:text-gray-700",
+          "relative z-10 inline-flex items-center justify-center whitespace-nowrap rounded p-3 text-sm font-medium text-gray-500 transition-all hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-gray-900 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:block data-[state=active]:after:h-[3px] data-[state=active]:after:w-full data-[state=active]:after:bg-gray-900 data-[state=active]:after:content-['']",
           className
         )}
         {...props}
@@ -71,7 +74,7 @@ const TabsContent = React.forwardRef<TabsContentRef, TabsContentProps>(
       <TabsContentPrimitive
         ref={ref}
         className={cn(
-          "mt-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2",
+          "mt-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2",
           className
         )}
         {...props}

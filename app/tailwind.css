@@ -83,7 +83,7 @@
 
 /* article toc */
 .toc {
-  @apply sticky top-12 pt-9 pb-8 pr-6 bg-gray-50 rounded-lg hidden xl:block;
+  @apply sticky top-12 pt-9 pb-8 pr-6 bg-gray-100 rounded-lg hidden xl:block;
   width: 272px;
   max-width: 272px;
 }

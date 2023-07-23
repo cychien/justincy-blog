@@ -42,9 +42,9 @@ type HeaderProps = {
 function Header({ title, publishedAt, tag }: HeaderProps) {
   return (
     <div>
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between">
         <h1 className="text-3xl font-bold">{title}</h1>
-        <div className="text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-500 sm:mt-0">
           發佈於 {format(new Date(publishedAt), "yyyy-MM-dd")}
         </div>
       </div>
