@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/cloudflare";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
@@ -15,6 +15,27 @@ export async function loader({ request }: LoaderArgs) {
 
   return json(matchedArticleMetadata);
 }
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    { title: data?.attributes.title },
+    {
+      name: "description",
+      content: data?.attributes.description,
+    },
+    { property: "og:title", content: data?.attributes.title },
+    {
+      property: "og:description",
+      content: data?.attributes.description,
+    },
+    { property: "og:image:alt", content: data?.attributes.title },
+    { property: "twitter:title", content: data?.attributes.title },
+    {
+      property: "twitter:description",
+      content: data?.attributes.description,
+    },
+  ];
+};
 
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>();

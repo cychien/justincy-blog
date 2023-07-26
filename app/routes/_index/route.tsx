@@ -24,13 +24,6 @@ import {
 } from "~/helpers/article";
 import { HomeArticle } from "~/routes/_index/HomeArticle";
 
-export const meta: V2_MetaFunction = () => {
-  return [
-    { title: "Justin CY Blog" },
-    { name: "description", content: "Welcome to Justin CY Blog!" },
-  ];
-};
-
 export async function loader() {
   // Return metadata about each of the posts for display on the index page.
   // Referencing the posts here instead of in the Index component down below
@@ -38,6 +31,30 @@ export async function loader() {
   // index page.
   return json({ articles: getArticlesForEveryTags() });
 }
+
+export const meta: V2_MetaFunction = () => {
+  return [
+    { title: "Justin CY blog" },
+    {
+      name: "description",
+      content:
+        "我是一位網頁前端工程師 ，我喜歡開發產品、研究一切能增進使用者體驗的事，也喜歡設計生活、研究將生活變得更有品質的方法，如果你對我做的事或我的想法有興趣，歡迎常常來看看!",
+    },
+    { property: "og:title", content: "Justin CY blog" },
+    {
+      property: "og:description",
+      content:
+        "我是一位網頁前端工程師 ，我喜歡開發產品、研究一切能增進使用者體驗的事，也喜歡設計生活、研究將生活變得更有品質的方法，如果你對我做的事或我的想法有興趣，歡迎常常來看看!",
+    },
+    { property: "og:image:alt", content: "Justin CY blog" },
+    { property: "twitter:title", content: "Justin CY blog" },
+    {
+      property: "twitter:description",
+      content:
+        "我是一位網頁前端工程師 ，我喜歡開發產品、研究一切能增進使用者體驗的事，也喜歡設計生活、研究將生活變得更有品質的方法，如果你對我做的事或我的想法有興趣，歡迎常常來看看!",
+    },
+  ];
+};
 
 export default function Index() {
   const { pathname, search } = useLocation();
