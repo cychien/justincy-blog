@@ -30,7 +30,7 @@ function HomeArticle({
           <div>
             <div className="text-lg font-semibold">{title}</div>
             <div className="mt-4 text-sm leading-6 lg:mt-3">{excerpt}</div>
-            <div className="mt-3 flex items-center space-x-3 lg:mt-4">
+            <div className="mt-3 flex items-center space-x-3">
               <div className="flex items-center space-x-1.5">
                 <ShiftBy y={0.5}>
                   <PenGestalt className="h-4 w-4 flex-shrink-0 text-gray-500" />
@@ -49,7 +49,9 @@ function HomeArticle({
               )}
             </div>
           </div>
-          <div className="hidden min-h-[124px] min-w-[124px] border lg:block" />
+          <div className="relative hidden h-[130px] w-[130px] flex-shrink-0 overflow-hidden rounded border border-[#EDEDF0] bg-gray-50 object-cover group-hover:shadow lg:block">
+            <img src={cover} alt="" className="mix-blend-multiply" />
+          </div>
         </div>
       </article>
     </Link>

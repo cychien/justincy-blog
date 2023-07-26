@@ -2,7 +2,8 @@
 tag: fend
 title: Web Fonts 效能優化
 description: 文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，並從根本出發提出網頁文字的最佳實踐。
-published_at: 2022-04-04
+published_at: 2023-07-16
+cover: https://res.cloudinary.com/dgppby8lr/image/upload/v1690335705/blog/Frame_107_qpese0.png
 meta:
   - { title: Web Fonts 效能優化 }
   - { description: 文字，對網頁的使用者體驗影響巨大，過大的字體檔會導致 CLS (Cumulative Layout Shift)，造成 FOUT (Flash Of Unstyled Text)，進而使瀏覽者迷失、閱讀中斷。這篇文章將帶你了解問題根本，並從根本出發提出網頁文字的最佳實踐。}
@@ -199,7 +200,7 @@ global cache 是 chrome 早期的 cache 機制，不同網站間能共用 cache�
 
 若有 global cache 機制，那麼使用 Google host 的 font 是一個比較好的選擇，因為瀏覽者如果曾下載過你用的字體，你的網站便可以從 cache 直接取得字體，而不用建連線、發請求。
 
-Chrome 在 86 版因為安全考量，取消了 global cache 機制，轉而使用 double keyed cache 機制。在 double keyed cache 機制下，一個 cache 的 key 包括 request 方與 resource 方，假設瀏覽者在 A 網站下載 Inter 字體，那麼該字體檔的 cache key 就會是 A 與 Inter.woff2，只要 cache key 有任何不同，就無法擊中 cache 。也就是說，若你的網站 B 同樣使用到 Inter 字體，但因為你的請求是 B 與 Inter.woff2，所以並無法擊中 cache。
+Chrome 在 86 版因為安全考量，取消了 global cache 機制，轉而使用 **double keyed cache** 機制。在 double keyed cache 機制下，一個 cache 的 key 包括 request 方與 resource 方，假設瀏覽者在 A 網站下載 Inter 字體，那麼該字體檔的 cache key 就會是 A 與 Inter.woff2，只要 cache key 有任何不同，就無法擊中 cache 。也就是說，若你的網站 B 同樣使用到 Inter 字體，但因為你的請求是 B 與 Inter.woff2，所以並無法擊中 cache。
 
 因此，在現在的環境下，如果你的 server 有 HTTP/2 的功能，那麼 self host font 就會是效能更好的選擇。
 

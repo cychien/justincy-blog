@@ -8,6 +8,7 @@ type Article = {
     title: string;
     description: string;
     published_at: string;
+    cover: string;
   };
 };
 

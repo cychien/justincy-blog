@@ -4,7 +4,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
 
 import { getAllArticlesMetadata } from "~/helpers/article";
-import { getTagName } from "~/helpers/tags";
+import { getTagName, getTagStyle } from "~/helpers/tags";
 
 export async function loader({ request }: LoaderArgs) {
   const matchedArticleMetadata = getAllArticlesMetadata().find((article) => {
@@ -26,7 +26,7 @@ export default function Index() {
         publishedAt={loaderData.attributes.published_at}
         tag={loaderData.attributes.tag}
       />
-      <article className="prose prose-zinc mt-8 flex max-w-none flex-row-reverse items-start justify-end xl:justify-between">
+      <article className="prose prose-zinc mt-2 flex max-w-none flex-row-reverse items-start justify-end sm:mt-6 xl:justify-between">
         <Outlet />
       </article>
     </main>
@@ -50,7 +50,10 @@ function Header({ title, publishedAt, tag }: HeaderProps) {
       </div>
       {tag && (
         <div className="mt-5">
-          <div className="inline-block rounded border border-[#C3E9E2] bg-[#E2F8F4] px-3 py-1 text-sm text-[#03322A]">
+          <div
+            className="inline-block rounded border border-[#C3E9E2] bg-[#E2F8F4] px-3 py-1 text-sm text-[#03322A]"
+            style={getTagStyle(tag)}
+          >
             {getTagName(tag)}
           </div>
         </div>

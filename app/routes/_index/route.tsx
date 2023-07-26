@@ -54,8 +54,8 @@ export default function Index() {
           />
           <p className="mt-6 leading-7 lg:text-sm lg:leading-6">
             Hi 我是 Justin，我是一位網頁前端工程師 ，我喜歡<b>開發產品</b>、
-            <b>研究一切能增進使用者體驗的事</b>，也喜歡<b>思考人生</b>、
-            <b>研究高效工作方式</b>
+            <b>研究一切能增進使用者體驗的事</b>，也喜歡<b>設計生活</b>、
+            <b>研究將生活變得更有品質的方法</b>
             ，如果你對我做的事或我的想法有興趣，歡迎常常來看看！
           </p>
           <div className="mt-8 space-y-0.5">
@@ -105,11 +105,12 @@ export default function Index() {
             <div className="absolute left-0 top-0 h-1 w-full bg-gray-900" />
             <div className="flex items-center space-x-2">
               <EmailDuo className="h-6 w-6 text-gray-600" />
-              <span className="font-medium">Fresh 週報</span>
+              <span className="font-medium">Eureka 週報</span>
             </div>
             <div className="mt-4 text-sm leading-6 text-gray-600">
-              Fresh 週報整理了 集結了每週最有價值的內容，填寫下方
-              Email，有效率地獲取資訊
+              Eureka
+              週報集結了當週我認為最有價值的內容，內容涵括產品開發、設計點子以及
+              life hack，幫助你有效率地獲取資訊
             </div>
             <div className="mt-3 text-sm font-medium text-[#EC4733]">
               即將開放
@@ -138,9 +139,9 @@ export default function Index() {
             我的文章
           </h1>
           <p className="mt-7 leading-7 text-gray-500">
-            主要分享與使用者體驗有關的內容，偶爾會記錄生活雜想。HTDT
-            是一個有趣的文章分類，全名是 How to do
-            this，會教你如何實現一些精緻的網頁效果
+            主要分享產品開發和優化使用者體驗的技巧，偶爾也會分享 life hack
+            和生活雜想。HTDT 是一個有趣的文章分類，全名是 How to do
+            this，這類別的文章會教你實現一些精緻的網頁效果
           </p>
           <Tabs
             id="article-tabs"
@@ -206,7 +207,7 @@ function ArticlesTabsContent({
           excerpt={article.attributes.description}
           publishedAt={article.attributes.published_at}
           tag={article.attributes.tag}
-          cover=""
+          cover={article.attributes.cover}
           url={getArticleURLFromSlug(article.filename.replace(/\.mdx?$/, ""))}
         />
       ))}
