@@ -91,6 +91,11 @@ export default function App() {
           </div>
         </div>
         <ScrollRestoration />
+        <script
+          src="https://cdn.usefathom.com/script.js"
+          data-site="BQLABPLY"
+          defer
+        />
         <Scripts />
         <LiveReload />
       </body>
