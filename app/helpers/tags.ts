@@ -15,7 +15,11 @@ function getTagStyle(value: string) {
         color: "#0C3756",
       };
     case "htdt":
-      return {};
+      return {
+        background: "#EDFBED",
+        borderColor: "#B7E2C7",
+        color: "#084A0D",
+      };
     case "life":
       return {
         background: "#FEF0F0",

@@ -9,7 +9,7 @@ import { getTagName, getTagStyle } from "~/helpers/tags";
 export async function loader({ request }: LoaderArgs) {
   const matchedArticleMetadata = getAllArticlesMetadata().find((article) => {
     const slug = request.url.split("/").at(-1);
-    const articleFilenameSlug = article.filename.split(".").at(-2);
+    const articleFilenameSlug = article.path.split("/").at(-1);
     return articleFilenameSlug === slug;
   });
 

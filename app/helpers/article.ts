@@ -1,7 +1,9 @@
+import * as AniTabsArticle from "../routes/articles.anitabs/route.mdx";
 import * as FontOptArticle from "../routes/articles.fontopt.mdx";
 import * as JobArtArticle from "../routes/articles.jobart.mdx";
 
 type Article = {
+  path: string;
   filename: string;
   attributes: {
     tag?: string;
@@ -12,13 +14,14 @@ type Article = {
   };
 };
 
-const ARTICLES = [JobArtArticle, FontOptArticle] as Article[];
+const ARTICLES = [
+  { ...AniTabsArticle, path: "/articles/anitabs" },
+  { ...JobArtArticle, path: "/articles/jobart" },
+  { ...FontOptArticle, path: "/articles/fontopt" },
+] as Article[];
 
 function getAllArticlesMetadata() {
-  return ARTICLES.map((article) => ({
-    filename: article.filename,
-    attributes: article.attributes,
-  }));
+  return ARTICLES;
 }
 
 function getArticlesForEveryTags() {
@@ -41,14 +44,5 @@ function getArticlesForEveryTags() {
   return result;
 }
 
-function getArticleURLFromSlug(slug: string) {
-  const slugParts = slug.split(".").join("/");
-  return `/${slugParts}`;
-}
-
 export type { Article };
-export {
-  getAllArticlesMetadata,
-  getArticlesForEveryTags,
-  getArticleURLFromSlug,
-};
+export { getAllArticlesMetadata, getArticlesForEveryTags };

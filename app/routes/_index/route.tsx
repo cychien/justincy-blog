@@ -18,10 +18,7 @@ import {
   TabsTrigger,
 } from "~/components/site/Tabs";
 import type { Article } from "~/helpers/article";
-import {
-  getArticlesForEveryTags,
-  getArticleURLFromSlug,
-} from "~/helpers/article";
+import { getArticlesForEveryTags } from "~/helpers/article";
 import { HomeArticle } from "~/routes/_index/HomeArticle";
 
 export async function loader() {
@@ -62,7 +59,7 @@ export default function Index() {
 
   return (
     <main className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[288px_1fr] lg:gap-16 xl:grid-cols-[288px_1fr] xl:gap-[102px]">
-      <div className="space-y-12 lg:sticky lg:top-12">
+      <div className="space-y-12 lg:sticky lg:top-12 lg:self-start">
         <div>
           <img
             src={avatarSrc}
@@ -219,13 +216,13 @@ function ArticlesTabsContent({
     <div className="space-y-12">
       {articles.map((article) => (
         <HomeArticle
-          key={article.filename}
+          key={article.path}
           title={article.attributes.title}
           excerpt={article.attributes.description}
           publishedAt={article.attributes.published_at}
           tag={article.attributes.tag}
           cover={article.attributes.cover}
-          url={getArticleURLFromSlug(article.filename.replace(/\.mdx?$/, ""))}
+          url={article.path}
         />
       ))}
     </div>
