@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.6.9",
-    "@cychien/cotton-ui": "^0.1.1",
+    "@cychien/cotton-ui": "0.x",
     "@radix-ui/react-tabs": "^1.0.4",
     "@remix-run/cloudflare": "^1.18.1",
     "@remix-run/cloudflare-pages": "^1.18.1",

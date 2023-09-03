@@ -5,7 +5,7 @@ import {
   TabsListPrimitive,
   TabsPrimitive,
   TabsTriggerPrimitive,
-} from "~/components/cotton/tabs/TabsPrimitive";
+} from "~/components/cotton/Tabs";
 import type { CottonComponent } from "~/components/cotton/types";
 import { cn } from "~/components/cotton/utils";
 

@@ -10,6 +10,7 @@ meta:
 ---
 
 import CodeBlock from "~/components/site/mdx/CodeBlock"
+import { CodePlayground } from '~/components/site/CodePlayground'
 import { AnimatedTabs } from "./AnimatedTabs"
 
 這次要實作的是 Animated Tabs，在這個 Tabs 裡 pill 代表著當前的 active tab，每當用戶切換 tab 時，這個 pill 就會從舊位置**滑**至新位置，pill 會隨著 tab 的切換而不停移動，你可以試試下方的 component 實際看看效果。如果沒問題的話，我們就開始吧！
@@ -126,6 +127,8 @@ function AnimatedTabs() {
 
 ---
 
+## Final code
+
 做到這裡，Animated Tabs 就完成啦，如果你想要 pill 移動的更自然，你可以加上 spring 效果：
 
 <CodeBlock>
@@ -145,16 +148,47 @@ function AnimatedTabs() {
 
 最後附上完整程式碼：
 
-<CodeBlock>
-```tsx
-const languages = ["JavaScript", "Java", "Clojure", "Go", "Python"] as const;
+<CodePlayground 
+  template="react" 
+  editorHeight={500} 
+  previewHeight={200} 
+  customSetup={{ 
+    dependencies: { 
+      "@cychien/cotton-ui": "latest",
+      "framer-motion": "^10.15.0",
+      "clsx": "^1.2.1",
+      "tailwind-merge": "^1.13.2"
+    }
+  }}
+  options={{
+    externalResources: ["https://cdn.tailwindcss.com"]
+  }}
+  files={{
+    "/App.js": `import {
+  TabsContentPrimitive,
+  TabsListPrimitive,
+  TabsPrimitive,
+  TabsTriggerPrimitive,
+  useTabs,
+} from "@cychien/cotton-ui";
+import { motion } from "framer-motion";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import * as React from "react";
+
+export default function App() {
+  return <div className="bg-white h-screen flex items-center justify-center">
+    <AnimatedTabs />
+  </div>
+}
+    
+const languages = ["JavaScript", "Java", "Clojure", "Go", "Python"];
 
 function AnimatedTabs() {
   const defaultValue = languages[0];
-  const { pathname, search } = useLocation();
   const tabsProps = useTabs({
     id: "animated-tabs",
-    url: pathname + search,
+    url: "/",
     defaultValue,
   });
 
@@ -189,7 +223,59 @@ function AnimatedTabs() {
     </Tabs>
   );
 }
-```
-</CodeBlock>
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+const Tabs = React.forwardRef(
+  ({ className, ...props }, ref) => {
+    return <TabsPrimitive ref={ref} className={className} {...props} />;
+  }
+);
+
+const TabsList = React.forwardRef(
+  ({ className, ...props }, ref) => {
+    return (
+      <TabsListPrimitive
+        ref={ref}
+        className={cn("relative flex items-center space-x-2", className)}
+        {...props}
+      />
+    );
+  }
+);
+
+const TabsTrigger = React.forwardRef(
+  ({ className, ...props }, ref) => {
+    return (
+      <TabsTriggerPrimitive
+        ref={ref}
+        className={cn(
+          "relative inline-flex items-center justify-center whitespace-nowrap rounded px-3 py-1.5 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 disabled:pointer-events-none disabled:opacity-50",
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+
+const TabsContent = React.forwardRef(
+  ({ className, ...props }, ref) => {
+    return (
+      <TabsContentPrimitive
+        ref={ref}
+        className={cn(
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2",
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);`
+  }}
+/>
 
 以上就是這次的 How to do this，我們下篇再見！

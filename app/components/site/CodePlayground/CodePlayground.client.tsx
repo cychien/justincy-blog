@@ -1,4 +1,9 @@
-import type { SandpackPredefinedTemplate } from "@codesandbox/sandpack-react";
+import type {
+  SandpackFiles,
+  SandpackInternalOptions,
+  SandpackPredefinedTemplate,
+  SandpackSetup,
+} from "@codesandbox/sandpack-react";
 import {
   SandpackCodeEditor,
   SandpackConsole,
@@ -13,6 +18,9 @@ import { cn } from "~/components/cotton/utils";
 
 type CodePlaygroundClientProps = {
   template?: SandpackPredefinedTemplate;
+  customSetup?: SandpackSetup;
+  options?: SandpackInternalOptions;
+  files?: SandpackFiles;
   editorHeight: number;
   previewHeight: number;
   onReady?: () => void;
@@ -20,6 +28,9 @@ type CodePlaygroundClientProps = {
 
 function CodePlaygroundClient({
   template,
+  customSetup,
+  options,
+  files,
   editorHeight,
   previewHeight,
   onReady,
@@ -27,6 +38,9 @@ function CodePlaygroundClient({
   return (
     <SandpackProvider
       template={template}
+      customSetup={customSetup}
+      options={options}
+      files={files}
       theme={{
         colors: {
           surface1: "#1B2B34",
@@ -100,7 +114,7 @@ function CodePlaygroundClientContent({
   }, [listen, onReady]);
 
   return (
-    <SandpackLayout className="!block !rounded-md">
+    <SandpackLayout className="!block !rounded-lg">
       <div className="border border-[#343D46]">
         <header className="bg-[#343D46] px-3 py-2 text-[#e8ecf1]">
           Code Playground
@@ -130,7 +144,7 @@ function CodePlaygroundClientContent({
             </button>
           </div>
           <SandpackPreview
-            className={cn("p-4 [&>*]:rounded", {
+            className={cn("p-4 [&>*]:rounded-md", {
               "!hidden": display !== "result",
             })}
             style={{ height: `${previewHeight}px` }}
@@ -138,7 +152,7 @@ function CodePlaygroundClientContent({
           />
           <SandpackConsole
             style={{ height: `${previewHeight}px` }}
-            className={cn("p-4 [&>*]:rounded", {
+            className={cn("p-4 [&>*]:rounded-md", {
               "!hidden": display !== "console",
             })}
           />

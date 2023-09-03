@@ -1225,10 +1225,10 @@
     react-devtools-inline "4.4.0"
     react-is "^17.0.2"
 
-"@cychien/cotton-ui@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@cychien/cotton-ui/-/cotton-ui-0.1.1.tgz#4eeecf04f4deac940c8b1dfe41b27e96b36c13f6"
-  integrity sha512-ssUCAKKHMvM7ibLLtQub4OUSVgPXjNbe8q9KZu1Dtx+r/nsjopmL/IfJQ2huOkOb3MuIv/BU/dcBK4qyWu0X9A==
+"@cychien/cotton-ui@0.x":
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@cychien/cotton-ui/-/cotton-ui-0.2.15.tgz#504fe6110b4d6c6f88cef34b6791c8a580974591"
+  integrity sha512-gIrRKxkydxNnx5Y/elwPBBX6MUJ3u+KzwK0p8IxX/duWmRmVYZCLn0qxg6d/reLn7vj2BZPJETE3OHwBb4RyJQ==
 
 "@emotion/hash@^0.9.0":
   version "0.9.1"

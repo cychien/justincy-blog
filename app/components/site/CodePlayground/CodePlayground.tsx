@@ -1,4 +1,9 @@
-import type { SandpackPredefinedTemplate } from "@codesandbox/sandpack-react/types";
+import type {
+  SandpackFiles,
+  SandpackInternalOptions,
+  SandpackPredefinedTemplate,
+  SandpackSetup,
+} from "@codesandbox/sandpack-react/types";
 import { motion } from "framer-motion";
 import * as React from "react";
 
@@ -8,12 +13,18 @@ import { CodePlaygroundClient } from "./CodePlayground.client";
 
 type CodePlaygroundProps = {
   template?: SandpackPredefinedTemplate;
+  customSetup?: SandpackSetup;
+  options?: SandpackInternalOptions;
+  files?: SandpackFiles;
   editorHeight?: number;
   previewHeight?: number;
 };
 
 function CodePlayground({
   template,
+  customSetup,
+  options,
+  files,
   editorHeight = 300,
   previewHeight = 300,
 }: CodePlaygroundProps) {
@@ -24,7 +35,8 @@ function CodePlayground({
   }, []);
 
   return (
-    <div style={{ height: `${editorHeight + previewHeight}px` }}>
+    // plus header, tabs, border etc.
+    <div style={{ height: `${editorHeight + previewHeight + 75}px` }}>
       <div
         className={cn("h-full pt-4 text-sm font-medium text-gray-500", {
           hidden: isPlaygroundReady,
@@ -41,6 +53,9 @@ function CodePlayground({
         >
           <CodePlaygroundClient
             template={template}
+            customSetup={customSetup}
+            options={options}
+            files={files}
             editorHeight={editorHeight}
             previewHeight={previewHeight}
             onReady={handlePlaygroundReady}

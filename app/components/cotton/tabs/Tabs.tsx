@@ -1,12 +1,29 @@
 import * as RadixTabsPrimitive from "@radix-ui/react-tabs";
 import * as React from "react";
 
-import { composeURL, createContext, useHydrated } from "../utils";
+import { composeURL, createContext } from "../utils";
+
+type UseTabsArgs = {
+  id: string;
+  url: string;
+  defaultValue: string;
+};
+
+function useTabs({ id, url, defaultValue }: UseTabsArgs) {
+  const search = url.split("?")[1];
+  const searchParams = new URLSearchParams(search);
+
+  const [value, setValue] = React.useState(
+    () => searchParams.get(id) || defaultValue
+  );
+
+  return { id, url, value, onValueChange: setValue };
+}
 
 type TabsContextType = {
   id: string;
-  currentURL: string;
-  currentValue: string | undefined;
+  url: string;
+  value: string;
 };
 
 const [TabsContextProvider, useTabsContext] = createContext<TabsContextType>({
@@ -18,23 +35,14 @@ interface TabsProps
   extends React.ComponentPropsWithoutRef<typeof RadixTabsPrimitive.Root> {
   id: string;
   url: string;
-  defaultValue: string;
+  value: string;
 }
 
 const TabsPrimitive = React.forwardRef<TabsRef, TabsProps>(
-  ({ id, url, defaultValue, ...props }, ref) => {
-    const search = url.split("?")[1];
-    const searchParams = new URLSearchParams(search);
-    const currentValue = searchParams.get(id) || defaultValue;
-
+  ({ id, url, value, ...props }, ref) => {
     return (
-      <TabsContextProvider value={{ id, currentURL: url, currentValue }}>
-        <RadixTabsPrimitive.Root
-          ref={ref}
-          id={id}
-          defaultValue={currentValue}
-          {...props}
-        />
+      <TabsContextProvider value={{ id, url, value }}>
+        <RadixTabsPrimitive.Root ref={ref} id={id} {...props} />
       </TabsContextProvider>
     );
   }
@@ -51,31 +59,30 @@ interface TabsTriggerProps
 
 const TabsTriggerPrimitive = React.forwardRef<TabsTriggerRef, TabsTriggerProps>(
   ({ value, className, children, ...props }, ref) => {
-    const hydrated = useHydrated();
     const tabsContext = useTabsContext();
+
     const url = composeURL({
-      url: tabsContext.currentURL,
+      url: tabsContext.url,
       searchParams: { [tabsContext.id]: value },
       hash: tabsContext.id,
     });
 
-    return !hydrated ? (
-      <a
-        ref={ref as React.Ref<HTMLAnchorElement>}
-        href={url}
-        className={className}
-        data-state={tabsContext.currentValue === value ? "active" : "inactive"}
-      >
-        {children}
-      </a>
-    ) : (
+    return (
       <RadixTabsPrimitive.Trigger
-        ref={ref as React.Ref<HTMLButtonElement>}
-        className={className}
+        // ref={ref}
+        asChild={true}
         value={value}
         {...props}
       >
-        {children}
+        <a
+          href={url}
+          className={className}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          {children}
+        </a>
       </RadixTabsPrimitive.Trigger>
     );
   }
@@ -89,4 +96,5 @@ export {
   TabsListPrimitive,
   TabsPrimitive,
   TabsTriggerPrimitive,
+  useTabs,
 };

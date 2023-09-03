@@ -1,1 +1,1 @@
-export * from "./TabsPrimitive";
+export * from "./Tabs";
