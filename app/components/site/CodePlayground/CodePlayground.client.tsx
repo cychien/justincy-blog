@@ -14,7 +14,7 @@ import {
 } from "@codesandbox/sandpack-react";
 import * as React from "react";
 
-import { cn } from "~/components/cotton/utils";
+import { cn } from "~/utils";
 
 type CodePlaygroundClientProps = {
   template?: SandpackPredefinedTemplate;

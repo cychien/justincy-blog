@@ -2,7 +2,7 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 
-import { cn } from "~/components/cotton/utils";
+import { cn } from "~/utils";
 
 const buttonVariant = cva(
   "inline-flex items-center justify-center rounded text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring focus-visible:ring-gray-200 disabled:opacity-50 disabled:pointer-events-none",

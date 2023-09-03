@@ -7,7 +7,7 @@ import type {
 import { motion } from "framer-motion";
 import * as React from "react";
 
-import { cn, useHydrated } from "~/components/cotton/utils";
+import { cn, useHydrated } from "~/utils";
 
 import { CodePlaygroundClient } from "./CodePlayground.client";
 

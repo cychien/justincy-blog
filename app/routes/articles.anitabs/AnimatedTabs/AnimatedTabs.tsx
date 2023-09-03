@@ -9,7 +9,7 @@ import { useLocation } from "@remix-run/react";
 import { motion } from "framer-motion";
 import * as React from "react";
 
-import { cn } from "~/components/cotton/utils";
+import { cn } from "~/utils";
 
 const languages = ["JavaScript", "Java", "Clojure", "Go", "Python"] as const;
 

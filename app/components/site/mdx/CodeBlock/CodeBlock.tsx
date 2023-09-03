@@ -2,7 +2,7 @@ import type { Language } from "prism-react-renderer";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/oceanicNext";
 
-import { cn } from "~/components/cotton/utils";
+import { cn } from "~/utils";
 
 type addPrefix<TKey, TPrefix extends string> = TKey extends Language
   ? `${TPrefix}${TKey}`

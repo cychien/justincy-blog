@@ -1,17 +1,15 @@
-import * as React from "react";
-
 import {
   TabsContentPrimitive,
   TabsListPrimitive,
   TabsPrimitive,
   TabsTriggerPrimitive,
-} from "~/components/cotton/Tabs";
-import type { CottonComponent } from "~/components/cotton/types";
-import { cn } from "~/components/cotton/utils";
+} from "@cychien/cotton-ui";
+import * as React from "react";
+
+import { cn } from "~/utils";
 
 interface TabsProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive>,
-    CottonComponent {}
+  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive> {}
 type TabsRef = React.ElementRef<typeof TabsPrimitive>;
 
 const Tabs = React.forwardRef<TabsRef, TabsProps>(
@@ -22,8 +20,7 @@ const Tabs = React.forwardRef<TabsRef, TabsProps>(
 Tabs.displayName = "Tabs";
 
 interface TabsListProps
-  extends React.ComponentPropsWithoutRef<typeof TabsListPrimitive>,
-    CottonComponent {}
+  extends React.ComponentPropsWithoutRef<typeof TabsListPrimitive> {}
 type TabsListRef = React.ElementRef<typeof TabsListPrimitive>;
 
 const TabsList = React.forwardRef<TabsListRef, TabsListProps>(
@@ -43,8 +40,7 @@ const TabsList = React.forwardRef<TabsListRef, TabsListProps>(
 TabsList.displayName = "TabsList";
 
 interface TabsTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof TabsTriggerPrimitive>,
-    CottonComponent {}
+  extends React.ComponentPropsWithoutRef<typeof TabsTriggerPrimitive> {}
 type TabsTriggerRef = React.ElementRef<typeof TabsTriggerPrimitive>;
 
 const TabsTrigger = React.forwardRef<TabsTriggerRef, TabsTriggerProps>(
@@ -64,8 +60,7 @@ const TabsTrigger = React.forwardRef<TabsTriggerRef, TabsTriggerProps>(
 TabsTrigger.displayName = "TabsTrigger";
 
 interface TabsContentProps
-  extends React.ComponentPropsWithoutRef<typeof TabsContentPrimitive>,
-    CottonComponent {}
+  extends React.ComponentPropsWithoutRef<typeof TabsContentPrimitive> {}
 type TabsContentRef = React.ElementRef<typeof TabsContentPrimitive>;
 
 const TabsContent = React.forwardRef<TabsContentRef, TabsContentProps>(
