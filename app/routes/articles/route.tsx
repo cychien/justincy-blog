@@ -47,7 +47,7 @@ export default function Index() {
         publishedAt={loaderData.attributes.published_at}
         tag={loaderData.attributes.tag}
       />
-      <article className="prose prose-zinc mt-2 flex max-w-none flex-row-reverse items-start justify-end sm:mt-6 xl:justify-between">
+      <article className="prose prose-zinc mt-2 flex max-w-none flex-row-reverse items-start justify-end sm:mt-4 sm:prose-p:my-[2em] xl:justify-between">
         <Outlet />
       </article>
     </main>

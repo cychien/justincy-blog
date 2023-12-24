@@ -1,3 +1,4 @@
+import * as FocusGrowArticle from "../routes/articles.focusgrow.mdx";
 import * as FontOptArticle from "../routes/articles.fontopt.mdx";
 import * as JobArtArticle from "../routes/articles.jobart.mdx";
 
@@ -14,6 +15,7 @@ type Article = {
 };
 
 const ARTICLES = [
+  { ...FocusGrowArticle, path: "/articles/focusgrow" },
   { ...JobArtArticle, path: "/articles/jobart" },
   { ...FontOptArticle, path: "/articles/fontopt" },
 ] as Article[];

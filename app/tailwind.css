@@ -97,6 +97,9 @@
   width: 272px;
   max-width: 272px;
 }
+.toc:not(:has(.toc-item)) {
+  @apply invisible;
+}
 .toc-item-h2 {
   @apply py-1 pl-6 text-gray-700 text-sm font-medium;
 }
