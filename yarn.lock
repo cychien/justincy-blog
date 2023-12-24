@@ -1226,9 +1226,9 @@
     react-is "^17.0.2"
 
 "@cychien/cotton-ui@0.x":
-  version "0.2.15"
-  resolved "https://registry.yarnpkg.com/@cychien/cotton-ui/-/cotton-ui-0.2.15.tgz#504fe6110b4d6c6f88cef34b6791c8a580974591"
-  integrity sha512-gIrRKxkydxNnx5Y/elwPBBX6MUJ3u+KzwK0p8IxX/duWmRmVYZCLn0qxg6d/reLn7vj2BZPJETE3OHwBb4RyJQ==
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/@cychien/cotton-ui/-/cotton-ui-0.2.16.tgz#31194776865199a6f834c6d265f06f4cfbf0ddc2"
+  integrity sha512-q2ULc6YVx2Jue2hlPIFevbBgI0W4GnQBYGIPDOCr5unbwOoWeND0B0y1kJnbniaSxFMf3lZAPTOLuxxag8iQWw==
 
 "@emotion/hash@^0.9.0":
   version "0.9.1"
