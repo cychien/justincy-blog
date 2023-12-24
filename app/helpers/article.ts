@@ -1,4 +1,3 @@
-import * as AniTabsArticle from "../routes/articles.anitabs/route.mdx";
 import * as FontOptArticle from "../routes/articles.fontopt.mdx";
 import * as JobArtArticle from "../routes/articles.jobart.mdx";
 
@@ -15,7 +14,6 @@ type Article = {
 };
 
 const ARTICLES = [
-  { ...AniTabsArticle, path: "/articles/anitabs" },
   { ...JobArtArticle, path: "/articles/jobart" },
   { ...FontOptArticle, path: "/articles/fontopt" },
 ] as Article[];

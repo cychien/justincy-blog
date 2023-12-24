@@ -1,22 +1,22 @@
 import { json, type V2_MetaFunction } from "@remix-run/cloudflare";
-import { useLoaderData, useLocation } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
 import avatarSrc from "~/assets/avatar.jpeg";
 import {
   // ArrowRight,
-  EmailDuo,
+  // EmailDuo,
   Github,
-  Threads,
+  // Threads,
   Twitter,
 } from "~/components/icons";
 // import { Button } from "~/components/site/Button";
 import { ShiftBy } from "~/components/site/ShiftBy";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "~/components/site/Tabs";
+// import {
+//   Tabs,
+//   TabsContent,
+//   TabsList,
+//   TabsTrigger,
+// } from "~/components/site/Tabs";
 import type { Article } from "~/helpers/article";
 import { getArticlesForEveryTags } from "~/helpers/article";
 import { HomeArticle } from "~/routes/_index/HomeArticle";
@@ -35,26 +35,25 @@ export const meta: V2_MetaFunction = () => {
     {
       name: "description",
       content:
-        "我是一位網頁前端工程師 ，我喜歡開發產品、研究一切能增進使用者體驗的事，也喜歡設計生活、研究將生活變得更有品質的方法，如果你對我做的事或我的想法有興趣，歡迎常常來看看!",
+        "👋 我是 Justin，一位在 Cooby 工作的軟體工程師，熱衷於打造 User Interface",
     },
     { property: "og:title", content: "Justin CY blog" },
     {
       property: "og:description",
       content:
-        "我是一位網頁前端工程師 ，我喜歡開發產品、研究一切能增進使用者體驗的事，也喜歡設計生活、研究將生活變得更有品質的方法，如果你對我做的事或我的想法有興趣，歡迎常常來看看!",
+        "👋 我是 Justin，一位在 Cooby 工作的軟體工程師，熱衷於打造 User Interface",
     },
     { property: "og:image:alt", content: "Justin CY blog" },
     { property: "twitter:title", content: "Justin CY blog" },
     {
       property: "twitter:description",
       content:
-        "我是一位網頁前端工程師 ，我喜歡開發產品、研究一切能增進使用者體驗的事，也喜歡設計生活、研究將生活變得更有品質的方法，如果你對我做的事或我的想法有興趣，歡迎常常來看看!",
+        "👋 我是 Justin，一位在 Cooby 工作的軟體工程師，熱衷於打造 User Interface",
     },
   ];
 };
 
 export default function Index() {
-  const { pathname, search } = useLocation();
   const loaderData = useLoaderData<typeof loader>();
 
   return (
@@ -67,25 +66,16 @@ export default function Index() {
             className="border-pretty h-16 w-16 rounded-full shadow"
           />
           <p className="mt-6 leading-7 lg:text-sm lg:leading-6">
-            Hi 我是 Justin，我是一位網頁前端工程師 ，我喜歡<b>開發產品</b>、
-            <b>研究一切能增進使用者體驗的事</b>，也喜歡<b>設計生活</b>、
-            <b>研究將生活變得更有品質的方法</b>
-            ，如果你對我做的事或我的想法有興趣，歡迎常常來看看！
+            👋 我是 Justin，一位在{" "}
+            <a
+              href="https://www.cooby.co/en"
+              className="font-medium text-gray-700 hover:text-gray-900 hover:underline"
+            >
+              Cooby
+            </a>{" "}
+            工作的軟體工程師，熱衷於打造 User Interface
           </p>
           <div className="mt-8 space-y-0.5">
-            <div>
-              <a
-                href="https://www.threads.net/@justinnncy"
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center space-x-2"
-              >
-                <Threads className="h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-gray-700" />
-                <span className="font-latin text-sm font-medium text-gray-700 group-hover:text-gray-900 group-hover:underline">
-                  <ShiftBy y={-1}>@justinnncy</ShiftBy>
-                </span>
-              </a>
-            </div>
             <div>
               <a
                 href="https://twitter.com/justinchiency"
@@ -114,7 +104,7 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="hidden lg:block">
+        {/* <div className="hidden lg:block">
           <div className="border-pretty shadow-pretty relative overflow-hidden rounded-md border bg-gray-50 p-4 pt-6">
             <div className="absolute left-0 top-0 h-1 w-full bg-gray-900" />
             <div className="flex items-center space-x-2">
@@ -129,7 +119,7 @@ export default function Index() {
             <div className="mt-3 text-sm font-medium text-[#EC4733]">
               即將開放
             </div>
-            {/* <form className="mt-4 text-gray-600">
+            <form className="mt-4 text-gray-600">
               <label
                 htmlFor="email-input"
                 className="block text-[13px] text-gray-500"
@@ -143,21 +133,20 @@ export default function Index() {
                 className="border-pretty shadow-pretty form-input mt-1 w-full rounded border p-2 text-sm placeholder:text-gray-400"
               />
               <Button className="mt-2">訂閱 Fresh</Button>
-            </form> */}
+            </form>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="divide-y-2 divide-gray-100">
         <section className="pb-12">
           <h1 className="text-[28px] font-semibold leading-8 tracking-[5%]">
-            我的文章
+            文章
           </h1>
-          <p className="mt-7 leading-7 text-gray-500">
-            主要分享產品開發和優化使用者體驗的技巧，偶爾也會分享 life hack
-            和生活雜想。HTDT 是一個有趣的文章分類，全名是 How to do
-            this，這類別的文章會教你實現一些精緻的網頁效果
-          </p>
-          <Tabs
+          <div className="mt-10 md:mt-[53px]">
+            <ArticlesTabsContent articles={loaderData.articles["all"]} />
+          </div>
+
+          {/* <Tabs
             id="article-tabs"
             url={pathname + search}
             defaultValue="all"
@@ -186,7 +175,7 @@ export default function Index() {
               <ArticlesTabsContent articles={loaderData.articles["life"]} />
             </TabsContent>
           </Tabs>
-          {/* <div className="mt-12">
+          <div className="mt-12">
             <Button
               variant="secondary"
               className="flex items-center space-x-1.5"

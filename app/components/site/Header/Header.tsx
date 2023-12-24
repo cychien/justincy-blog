@@ -12,13 +12,6 @@ function Header() {
           <Logo className="h-5 w-[89px]" />
         </ShiftBy>
       </Link>
-      <Link
-        to="/new-features"
-        prefetch="intent"
-        className="font-latin text-sm font-medium text-gray-500 hover:underline"
-      >
-        New Features
-      </Link>
     </header>
   );
 }
