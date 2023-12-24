@@ -142,7 +142,7 @@ export default function Index() {
           <h1 className="text-[28px] font-semibold leading-8 tracking-[5%]">
             文章
           </h1>
-          <div className="mt-10 md:mt-[53px]">
+          <div className="mt-10 md:mt-12">
             <ArticlesTabsContent articles={loaderData.articles["all"]} />
           </div>
 

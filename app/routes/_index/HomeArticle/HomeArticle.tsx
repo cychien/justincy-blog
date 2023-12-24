@@ -31,11 +31,11 @@ function HomeArticle({
             <div className="text-lg font-semibold">{title}</div>
             <div className="mt-4 text-sm leading-6 lg:mt-3">{excerpt}</div>
             <div className="mt-3 flex items-center space-x-3">
-              <div className="flex items-center space-x-1.5">
+              <div className="flex flex-shrink-0 items-center space-x-1.5">
                 <ShiftBy y={0.5}>
                   <PenGestalt className="h-4 w-4 flex-shrink-0 text-gray-500" />
                 </ShiftBy>
-                <span className="font-latin text-sm text-gray-500">
+                <span className="flex-shrink-0 font-latin text-sm text-gray-500">
                   {format(new Date(publishedAt), "yyyy-MM-dd")}
                 </span>
               </div>
