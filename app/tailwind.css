@@ -115,3 +115,6 @@
 .toc-item-h3:not(:first-child) {
   @apply mt-1;
 }
+.toc-item-h4 {
+  @apply hidden;
+}

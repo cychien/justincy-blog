@@ -1,4 +1,9 @@
-const TAGS = { design: "設計", fend: "前端開發", htdt: "HTDT", life: "生活" };
+const TAGS = {
+  design: "設計",
+  fend: "前端開發",
+  book: "讀書筆記",
+  life: "生活",
+};
 
 function isKeyOfTags(key: string): key is keyof typeof TAGS {
   return key in TAGS;
@@ -14,7 +19,7 @@ function getTagStyle(value: string) {
         borderColor: "#B7D9E2",
         color: "#0C3756",
       };
-    case "htdt":
+    case "book":
       return {
         background: "#EDFBED",
         borderColor: "#B7E2C7",
