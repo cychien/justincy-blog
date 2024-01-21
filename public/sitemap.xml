@@ -10,6 +10,18 @@
 
     <!-- articles pages -->
     <url>
+        <loc>http://justincy.com/articles/writingstruggle</loc>
+        <lastmod>2024-01-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>http://justincy.com/articles/buybacktime</loc>
+        <lastmod>2024-01-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>http://justincy.com/articles/focusgrow</loc>
         <lastmod>2023-12-24</lastmod>
         <changefreq>monthly</changefreq>
