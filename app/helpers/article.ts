@@ -2,6 +2,7 @@ import * as BuyBackTimeArticle from "../routes/articles.buybacktime.mdx";
 import * as FocusGrowArticle from "../routes/articles.focusgrow.mdx";
 import * as FontOptArticle from "../routes/articles.fontopt.mdx";
 import * as JobArtArticle from "../routes/articles.jobart.mdx";
+import * as TodoListArticle from "../routes/articles.todolist.mdx";
 import * as WritingStruggleArticle from "../routes/articles.writingstruggle.mdx";
 
 type Article = {
@@ -17,6 +18,7 @@ type Article = {
 };
 
 const ARTICLES = [
+  { ...TodoListArticle, path: "/articles/todolist" },
   { ...WritingStruggleArticle, path: "/articles/writingstruggle" },
   { ...BuyBackTimeArticle, path: "/articles/buybacktime" },
   { ...FocusGrowArticle, path: "/articles/focusgrow" },
