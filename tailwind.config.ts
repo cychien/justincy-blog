@@ -38,4 +38,7 @@ export default {
       strategy: "class", // only generate classes
     }),
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 } satisfies Config;

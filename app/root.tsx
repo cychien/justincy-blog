@@ -82,7 +82,7 @@ export default function App() {
           }}
         />
         <div className="flex h-full flex-col">
-          <div className="mx-auto mb-12 w-full px-4 sm:px-8 lg:mb-24 xl:w-[1228px]">
+          <div className="mx-auto mb-12 w-full px-4 sm:px-8 lg:mb-24 lg:max-w-2xl">
             <Header />
             <Outlet />
           </div>

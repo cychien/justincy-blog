@@ -1,18 +1,26 @@
 import { Link } from "@remix-run/react";
 
-import { Logo } from "~/components/icons";
-
-import { ShiftBy } from "../ShiftBy";
-
 function Header() {
   return (
-    <header className="flex items-center justify-between py-2 sm:pb-4 sm:pt-5">
-      <Link to="/" prefetch="intent" className="flex h-9 items-center">
-        <ShiftBy y={3}>
-          <Logo className="h-5 w-[89px]" />
-        </ShiftBy>
-      </Link>
+    <header className="flex items-center justify-end space-x-4 py-2 pt-3 sm:pb-4 sm:pt-5">
+      <HeaderItem url="/" text="首頁" />
+      <HeaderItem url="/articles" text="文章" />
+      <HeaderItem url="/projects" text="Projects" />
+      <HeaderItem url="/experience" text="經歷" />
     </header>
+  );
+}
+
+type HeaderItemProps = {
+  url: string;
+  text: string;
+};
+
+function HeaderItem({ url, text }: HeaderItemProps) {
+  return (
+    <Link to={url} prefetch="intent">
+      <div className="text-sm text-gray-600 hover:text-gray-900">{text}</div>
+    </Link>
   );
 }
 
