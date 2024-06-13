@@ -5,7 +5,6 @@ function Header() {
     <header className="flex items-center justify-end space-x-4 py-2 pt-3 sm:pb-4 sm:pt-5">
       <HeaderItem url="/" text="首頁" />
       <HeaderItem url="/articles" text="文章" />
-      <HeaderItem url="/projects" text="Projects" />
       <HeaderItem url="/experience" text="經歷" />
     </header>
   );

@@ -23,13 +23,11 @@ export default {
     v2_routeConvention: true,
   },
   mdx: async () => {
-    const [rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeWrap] =
-      await Promise.all([
-        import("rehype-slug").then((mod) => mod.default),
-        import("rehype-autolink-headings").then((mod) => mod.default),
-        import("@jsdevtools/rehype-toc").then((mod) => mod.default),
-        import("rehype-wrap").then((mod) => mod.default),
-      ]);
+    const [rehypeSlug, rehypeAutolinkHeadings, rehypeWrap] = await Promise.all([
+      import("rehype-slug").then((mod) => mod.default),
+      import("rehype-autolink-headings").then((mod) => mod.default),
+      import("rehype-wrap").then((mod) => mod.default),
+    ]);
 
     const rehypeMdxCodeMeta = async () => {
       const { visit } = await import("unist-util-visit");
@@ -67,7 +65,6 @@ export default {
         rehypeAutolinkHeadings,
         await rehypeMdxCodeMeta(),
         [rehypeWrap, { wrapper: "div.main-content" }],
-        [rehypeToc, { cssClasses: { toc: "toc not-prose" } }],
       ],
     };
   },

@@ -36,24 +36,21 @@ export async function loader() {
 
 export const meta: V2_MetaFunction = () => {
   return [
-    { title: "Justin CY blog" },
+    { title: "Justin Chien" },
     {
       name: "description",
-      content:
-        "👋 我是 Justin，一位在 Cooby 工作的軟體工程師，熱衷於打造 User Interface",
+      content: "Hey, 我是 Justin，一位酷愛打造軟體產品的軟體工程師。",
     },
-    { property: "og:title", content: "Justin CY blog" },
+    { property: "og:title", content: "Justin Chien" },
     {
       property: "og:description",
-      content:
-        "👋 我是 Justin，一位在 Cooby 工作的軟體工程師，熱衷於打造 User Interface",
+      content: "Hey, 我是 Justin，一位酷愛打造軟體產品的軟體工程師。",
     },
-    { property: "og:image:alt", content: "Justin CY blog" },
-    { property: "twitter:title", content: "Justin CY blog" },
+    { property: "og:image:alt", content: "Justin Chien" },
+    { property: "twitter:title", content: "Justin Chien" },
     {
       property: "twitter:description",
-      content:
-        "👋 我是 Justin，一位在 Cooby 工作的軟體工程師，熱衷於打造 User Interface",
+      content: "Hey, 我是 Justin，一位酷愛打造軟體產品的軟體工程師。",
     },
   ];
 };

@@ -61,7 +61,7 @@ export default function App() {
           property="og:url"
           content={`https://justincy.com${location.pathname}`}
         />
-        <meta property="og:site_name" content="Justin CY blog" />
+        <meta property="og:site_name" content="Justin Chien" />
         <meta property="og:image" content="https://justincy.com/og.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -82,7 +82,7 @@ export default function App() {
           }}
         />
         <div className="flex h-full flex-col">
-          <div className="mx-auto mb-12 w-full px-4 sm:px-8 lg:mb-24 lg:max-w-2xl">
+          <div className="mx-auto mb-20 w-full px-4 sm:max-w-[736px] sm:px-8 lg:mb-24">
             <Header />
             <Outlet />
           </div>

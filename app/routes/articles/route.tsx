@@ -47,7 +47,7 @@ export default function Index() {
         publishedAt={loaderData.attributes.published_at}
         tag={loaderData.attributes.tag}
       />
-      <article className="prose prose-zinc mt-2 flex max-w-none flex-row-reverse items-start justify-end sm:mt-4 xl:justify-between">
+      <article className="prose prose-zinc mt-8 flex max-w-none flex-row-reverse items-start justify-end first:prose-headings:mt-0 first:prose-p:mt-0 sm:mt-14 xl:justify-between">
         <Outlet />
       </article>
     </main>
@@ -72,7 +72,7 @@ function Header({ title, publishedAt, tag }: HeaderProps) {
       {tag && (
         <div className="mt-5">
           <div
-            className="inline-block rounded border border-[#C3E9E2] bg-[#E2F8F4] px-3 py-1 text-sm text-[#03322A]"
+            className="inline-block rounded border border-[#C3E9E2] bg-[#E2F8F4] px-2 py-1 text-sm text-[#03322A]"
             style={getTagStyle(tag)}
           >
             {getTagName(tag)}

@@ -32,7 +32,7 @@ function Project({
               {status === "in-progress" ? (
                 <span className="text-[#059669]">進行中</span>
               ) : status === "archived" ? (
-                <span className="text-gray-400">封存</span>
+                <span className="text-gray-400">停止維護</span>
               ) : null}
             </div>
           </div>

@@ -30,7 +30,7 @@ function HomeArticle({
           <div>
             <div className="font-medium">{title}</div>
             {/* <div className="mt-4 text-sm leading-6 lg:mt-3">{excerpt}</div> */}
-            <div className="mt-1.5 text-[13px] text-gray-500">
+            <div className="mt-1 text-[13px] text-gray-500">
               {tag && getTagName(tag)}
               {/* {tag && (
                 <div
