@@ -35,7 +35,10 @@ export default function CodeBlock(preProps: {
     >
       {({ className, style, tokens, getTokenProps }) => (
         <pre
-          className={cn("rounded-lg font-mono font-medium", className)}
+          className={cn(
+            "rounded-lg font-mono font-medium sm:max-w-[672px]",
+            className
+          )}
           style={style}
         >
           <code className="inline-block text-[1em]">
