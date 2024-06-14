@@ -9,7 +9,6 @@ import {
   useLocation,
 } from "@remix-run/react";
 
-import bgSrc from "~/assets/bg.jpg";
 import { Header } from "~/components/site/Header";
 import stylesheet from "~/tailwind.css";
 
@@ -73,14 +72,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div
+        <div className="bg absolute left-0 top-0 -z-10 h-full max-h-full w-full overflow-hidden bg-[length:2500px] bg-top bg-no-repeat" />
+        {/* <div
           className="absolute left-0 top-0 -z-10 h-full max-h-full w-full overflow-hidden bg-no-repeat"
           style={{
             backgroundImage: `url(${bgSrc})`,
             backgroundPosition: "center top",
             backgroundSize: "2500px 873px",
           }}
-        />
+        /> */}
         <div className="flex h-full flex-col">
           <div className="mx-auto mb-20 w-full px-4 sm:max-w-[736px] sm:px-8 lg:mb-24">
             <Header />

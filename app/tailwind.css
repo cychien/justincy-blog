@@ -118,3 +118,33 @@
 .toc-item-h4 {
   @apply hidden;
 }
+
+.bg {
+  background-image: url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.jpg");
+  background-image: -webkit-image-set(
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.jpg") 1x,
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.jpg") 2x);
+  background-image: image-set(
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.jpg") 1x,
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.jpg") 2x);
+
+  @supports (background-image: url("logo.webp")) {
+    background-image: url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.webp");
+    background-image: -webkit-image-set(
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.webp") 1x,
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.webp") 2x);
+    background-image: image-set(
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.webp") 1x,
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.webp") 2x);
+  }
+
+  @supports (background-image: url("logo.avif")) {
+    background-image: url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.avif");
+    background-image: -webkit-image-set(
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.avif") 1x,
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.avif") 2x);
+    background-image: image-set(
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.avif") 1x,
+      url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.avif") 2x);
+  }  
+}
