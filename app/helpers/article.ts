@@ -1,10 +1,10 @@
 import * as BuyBackTimeArticle from "../routes/articles.buybacktime.mdx";
 import * as FocusGrowArticle from "../routes/articles.focusgrow.mdx";
-import * as FontOptArticle from "../routes/articles.fontopt.mdx";
 import * as JobArtArticle from "../routes/articles.jobart.mdx";
 import * as SunsamaArticle from "../routes/articles.sunsama.mdx";
 import * as TodoListArticle from "../routes/articles.todolist.mdx";
 import * as WritingStruggleArticle from "../routes/articles.writingstruggle.mdx";
+import * as ShouldIBuyArticle from "../routes/articles.shouldibuy.mdx";
 
 type Article = {
   path: string;
@@ -19,13 +19,13 @@ type Article = {
 };
 
 const ARTICLES = [
+  { ...ShouldIBuyArticle, path: "/articles/shouldibuy" },
   { ...SunsamaArticle, path: "/articles/sunsama" },
   { ...TodoListArticle, path: "/articles/todolist" },
   { ...WritingStruggleArticle, path: "/articles/writingstruggle" },
   { ...BuyBackTimeArticle, path: "/articles/buybacktime" },
   { ...FocusGrowArticle, path: "/articles/focusgrow" },
   { ...JobArtArticle, path: "/articles/jobart" },
-  { ...FontOptArticle, path: "/articles/fontopt" },
 ] as Article[];
 
 function getAllArticlesMetadata() {

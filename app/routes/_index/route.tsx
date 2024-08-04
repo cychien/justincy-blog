@@ -69,15 +69,8 @@ export default function Index() {
           />
           <h1 className="mt-12 text-3xl font-bold">Hey 我是 Justin 👋</h1>
           <div className="mt-12 space-y-5 leading-7">
-            <p>我是一位軟體工程師，我酷愛打造軟體產品。</p>
-            <p>
-              我相信人生在世，總需要做些有意義的事影響世界，而我最喜歡的方式就是利用軟體，將世界打造成我滿意、更好的樣子。
-            </p>
-            <p>
-              這個 Blog
-              集結了我在產品路上的心得，以及日常所思所想，也會分享我目前最新的
-              Projects，歡迎與我交流。
-            </p>
+            <p>我是一位軟體工程師，我熱愛打造軟體產品。</p>
+            <p>我在這分享產品路上的心得與日常所思所想，歡迎常來看看。</p>
           </div>
           <div className="mt-8 flex items-center space-x-3">
             <div>
