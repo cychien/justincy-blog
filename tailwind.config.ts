@@ -5,25 +5,24 @@ import defaultTheme from "tailwindcss/defaultTheme";
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1228px",
-    },
-    container: {
-      padding: {
-        DEFAULT: "1rem",
-        lg: "2rem",
-        xl: "2rem",
-      },
-    },
     colors: {
       transparent: "transparent",
       current: "currentColor",
       white: "#ffffff",
       black: "#000000",
-      gray: colors.zinc,
+      bg: "#F7F7F7",
+      gray: {
+        50: "#F9FAFB",
+        100: "#F2F4F7",
+        200: "#EAECF0",
+        300: "#D0D5DD",
+        400: "#98A2B3",
+        500: "#667085",
+        600: "#475467",
+        700: "#344054",
+        800: "#182230",
+        900: "#101828",
+      },
     },
     extend: {
       fontFamily: {

@@ -20,7 +20,7 @@
   }
 
   body {
-    @apply leading-normal antialiased min-h-full transition-colors text-gray-900 bg-white;
+    @apply leading-normal antialiased min-h-full transition-colors text-gray-900 bg-bg;
   }
 
   img,
@@ -61,6 +61,10 @@
 }
 
 @layer utilities {
+  .pretty-shadow {
+    box-shadow: 0 1px 5px -4px #131316b3,0 0 0 1px #222a3514,0 4px 8px #222a350d;
+  }
+
   .border-pretty {
     border-color: rgba(0, 0, 0, 0.08);
   }
@@ -147,4 +151,8 @@
       url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto/v1712835298/blog/bg_lc0nii.avif") 1x,
       url("https://res.cloudinary.com/dgppby8lr/image/upload/q_auto,dpr_2.0/v1712835298/blog/bg_lc0nii.avif") 2x);
   }  
+}
+
+.fluid-container {
+  @apply px-4 md:px-8 lg:px-12
 }
