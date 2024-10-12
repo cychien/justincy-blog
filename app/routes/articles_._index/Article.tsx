@@ -13,11 +13,11 @@ function Article({ title, excerpt, publishedAt, url }: ArticleProps) {
     <Link
       to={url}
       prefetch="intent"
-      className="group -mx-4 block rounded-md px-4 hover:bg-gray-200"
+      className="group -mx-4 -mt-[2px] block rounded-md px-4 hover:bg-gray-200"
     >
-      <article className="space-y-2 border-b border-gray-200 py-4 group-last:border-b-0 md:border-b-2 md:py-5">
+      <article className="space-y-2 border-b border-gray-200 py-4 pt-[18px] group-last-of-type:border-b-0 md:border-b-2 md:py-5 md:pt-[22px]">
         <div className="flex items-center justify-between gap-6">
-          <div className="flex-shrink-0 font-medium">{title}</div>
+          <div className="flex-shrink-0 font-semibold">{title}</div>
           <div className="flex-shrink-0 text-xs text-gray-400">
             {format(new Date(publishedAt), "yyyy.MM.dd")}
           </div>
